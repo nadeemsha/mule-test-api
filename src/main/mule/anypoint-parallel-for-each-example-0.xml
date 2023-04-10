@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/java
 ---
-1 to 10]]></ee:set-payload>
+1 to 9]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<parallel-foreach doc:name="Parallel For Each" doc:id="76ca1d38-efd4-464e-a4f1-275529269101" >
