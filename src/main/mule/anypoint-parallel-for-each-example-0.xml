@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="aa13a2f0-2a1b-424b-947d-041ca2fe9102" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="anypoint-parallel-for-each-example-0Flow" doc:id="afc114ff-5965-4b48-9172-9dfa95350327" >
+		<http:listener doc:name="Listener" doc:id="350381e0-8264-4588-a46f-82d19f83cb89" config-ref="HTTP_Listener_config" path="/example-1"/>
+		<ee:transform doc:name="1 to 10" doc:id="984a4582-3453-49ad-953a-9c5963c4dd56" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+1 to 10]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<parallel-foreach doc:name="Parallel For Each" doc:id="76ca1d38-efd4-464e-a4f1-275529269101" >
+			<logger level="INFO" doc:name="Payload" doc:id="35a96dc2-4903-4fa2-86ec-60d1847c351a" message="#['\n'] #[payload]"/>
+		</parallel-foreach>
+		<ee:transform doc:name="JSON" doc:id="ecfd05e8-59c0-4a46-8233-b6d5f2fab152" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
